@@ -1,0 +1,93 @@
+package ddddd;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class Process {
+	
+	public static void main(String[] args) {
+		
+		process1 pro1 = new process1();
+		pro1.process2();
+		pro1.process3();
+
+		
+		System.out.println(data);
+		
+		JsonParser parser = new JsonParser();
+		JsonArray arr = (JsonArray) parser.parse(data);
+		for(int i=0; i<arr.size(); i++) {
+			JsonObject obj = (JsonObject) arr.get(i);
+			String name = obj.get("cur_unit").getAsString();
+			if(name.equals("GBP")) {
+				
+				System.out.println(name  + " : " + obj.get("deal_bas_r").getAsString());
+			}
+			
+		}
+		
+	} catch(IOException e) {
+		e.printStackTrace();
+	}
+}
+	
+
+class process1 try {
+
+	
+	URL url = new URL("https://www.koreaexim.go.kr/site/program/financial/exchangeJSON");
+	HttpURLConnection con = (HttpURLConnection) url.openConnection();
+	con.setRequestMethod("GET");
+}
+
+public void process2() {
+	
+	Map<String, String> parameters = new HashMap<>();
+	parameters.put("authkey", "wu4z4qw9YE2LzsAqgg1vkLuIRRrsjrYc");
+	parameters.put("searchdate", "20181116");
+	parameters.put("data", "AP01");
+	
+	URLConnection con;
+	con.setDoOutput(true); 
+	DataOutputStream out = new DataOutputStream(con.getOutputStream());
+	out.writeBytes(ParameterStringBuilder.getParamsString(parameters));
+	out.flush();
+	out.close();
+	
+	con.setConnectTimeout(5000);
+	con.setReadTimeout(5000); 
+
+}
+
+
+
+public String process3(String data) {
+	HttpURLConnection con;
+	int status = con.getResponseCode();
+	// String data = null;
+	if(status == HttpURLConnection.HTTP_OK) {
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer content = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+		    content.append(inputLine);
+		}
+		data = content.toString();
+		in.close();			
+	}
+	con.disconnect();
+	return data;
+}
+}
+

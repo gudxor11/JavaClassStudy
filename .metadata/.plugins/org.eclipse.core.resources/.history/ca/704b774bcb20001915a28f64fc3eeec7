@@ -1,0 +1,11 @@
+package ddddd;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class process1 {
+	URL url = new URL("https://www.koreaexim.go.kr/site/program/financial/exchangeJSON");
+	HttpURLConnection con = (HttpURLConnection) url.openConnection();
+	con.setRequestMethod("GET");
+
+}
